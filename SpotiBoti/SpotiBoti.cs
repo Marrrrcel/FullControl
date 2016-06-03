@@ -89,7 +89,7 @@ namespace SpotiBoti {
         #endregion
 
         #region Form and Control actions
-        //FormClose events
+        //Form events
         private void SpotiBoti_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e) {
             try {
                 if(!_twitch.ircClient.IrcCloseConnection()) {
@@ -100,35 +100,20 @@ namespace SpotiBoti {
             }
         }
 
-        //PlayToolStrip events
+        //ToolStrip events
         private void playToolStripMenuItem_Click(object sender, EventArgs e) {
             Spotify.SendPlayRequest();
             //Spotify.SendPlayRequest("https://open.spotify.com/album/6KR3nUwkoVBcwMGEduOEIx");
         }
-
-        //PauseToolStrip events
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e) {
             Spotify.SendPauseRequest();
         }
-
-        //CustomCommandToolStrip events
         private void customCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
             new Settings_Commands().ShowDialog();
         }
-
-        //CloseToolStrip events
         private void closeToolStripMenuItem_Click(object sender, EventArgs e) {
             this.Close();
         }
-
-        //TabControl events
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
-            if(tabControl1.SelectedIndex == 2) {
-                UpdateFormText("SpotiBoti");
-            }
-        }
-
-        //EnableLogToolStrip events
         private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             _twitch.enableLog = enableLogToolStripMenuItem.Checked;
         }
@@ -141,6 +126,13 @@ namespace SpotiBoti {
                 enableLogToolStripMenuItem.Checked = true;
                 enableLogToolStripMenuItem.CheckState = CheckState.Checked;
                 _commands.setLog(enableLogToolStripMenuItem.Checked);
+            }
+        }
+
+        //TabControl events
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
+            if(tabControl1.SelectedIndex == 2) {
+                UpdateFormText("SpotiBoti");
             }
         }
         #endregion
