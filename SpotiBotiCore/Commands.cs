@@ -42,6 +42,18 @@ namespace SpotiBotiCore {
             }
 
             #region Public methods
+            //Return settings datatable
+            public DataTable getSettingsTable() {
+                //TODO: Create Settings table (enabled, setting) and move log to it and insert spotify enabler
+                _sqliteConnection.Open();
+                _sqliteCommand = new SQLiteCommand("select enabled Enable, setting Setting FROM Settings;", _sqliteConnection);
+                _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
+                DataTable result = new DataTable();
+                _sqliteDataAdapter.Fill(result);
+                _sqliteConnection.Close();
+                return result;
+            }
+
             //Return custom commands datatable
             public DataTable getCustomCommandTable() {
                 _sqliteConnection.Open();

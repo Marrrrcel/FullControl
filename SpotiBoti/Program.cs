@@ -17,6 +17,9 @@ namespace SpotiBoti
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            if(SpotiBotiCore.Database.SpotifyDatabase.IsSpotifyEnabled) {
+
+            }
             if(!Spotify.SpotifyRunning) {
                 DialogResult result = MessageBox.Show("Starting Spotify...", "Starting Spotify...", MessageBoxButtons.OKCancel);
                 if(result == DialogResult.OK) {

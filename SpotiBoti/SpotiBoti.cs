@@ -49,7 +49,7 @@ namespace SpotiBoti
 #endif
         }
         private string isFollowingMyStream(string username) {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"https://api.twitch.tv/kraken/users/mrrrrcl/follows/channels/hardlydifficult");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.twitch.tv/kraken/users/" + username + "/follows/channels/hardlydifficult");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "*/*";
             httpWebRequest.Method = "GET";
