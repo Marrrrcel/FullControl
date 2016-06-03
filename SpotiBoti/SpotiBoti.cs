@@ -24,6 +24,7 @@ namespace SpotiBoti
 
         //TODO: Move to Twitch.cs etc...
         SpotifyCore spCore = new SpotifyCore();
+        private bool p;
 
         //Constructor
         public SpotiBoti() {
@@ -34,6 +35,10 @@ namespace SpotiBoti
 #else
             DoTest();
 #endif
+        }
+
+        public SpotiBoti(bool IsSpotifyEnabled) {
+            // TODO: Initialize but without Spotify
         }
 
         #region Testing methods

@@ -10,8 +10,8 @@ namespace SpotiBotiCore {
         public static class SpotifyDatabase {
             public static bool IsSpotifyEnabled {
                 get {
-                    Commands cmd = new Commands();
-                    DataTable dt = cmd.getSettingsTable();
+                    //Commands cmd = new Commands();
+                    //DataTable dt = cmd.getSettingsTable();
                     return true; 
                 }
                 set { IsSpotifyEnabled = value; }

@@ -18,19 +18,20 @@ namespace SpotiBoti
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             if(SpotiBotiCore.Database.SpotifyDatabase.IsSpotifyEnabled) {
-
-            }
-            if(!Spotify.SpotifyRunning) {
-                DialogResult result = MessageBox.Show("Starting Spotify...", "Starting Spotify...", MessageBoxButtons.OKCancel);
-                if(result == DialogResult.OK) {
-                    Spotify.StartSpotifyWebHelper();
-                    Spotify.StartSpotify();
+                if(!Spotify.SpotifyRunning) {
+                    DialogResult result = MessageBox.Show("Starting Spotify...", "Starting Spotify...", MessageBoxButtons.OKCancel);
+                    if(result == DialogResult.OK) {
+                        Spotify.StartSpotifyWebHelper();
+                        Spotify.StartSpotify();
+                        Application.Run(new SpotiBoti());
+                    } else if(result == DialogResult.Cancel) {
+                        Application.Exit();
+                    }
+                } else {
                     Application.Run(new SpotiBoti());
-                } else if(result == DialogResult.Cancel) {
-                    Application.Exit();
                 }
             } else {
-                Application.Run(new SpotiBoti());
+                Application.Run(new SpotiBoti(false));
             }
         }
     }
