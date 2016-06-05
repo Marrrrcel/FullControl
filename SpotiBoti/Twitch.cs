@@ -22,10 +22,10 @@ namespace SpotiBoti {
         private DateTime TimeOfBotStarted = DateTime.Now;
         public IrcClient ircClient;
         public Thread twitchThread, spotifyThread;
-        public Commands commands;
+        public DB commands;
 
         //Constructor
-        public Twitch(SpotiBoti _spotiBoti, IrcInfo _ircInfo, bool _enableLog, Commands _commands) {
+        public Twitch(SpotiBoti _spotiBoti, IrcInfo _ircInfo, bool _enableLog, DB _commands) {
             this.enableLog = _enableLog;
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;

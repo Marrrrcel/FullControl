@@ -37,7 +37,7 @@ namespace SpotiBoti
                 dataGridView1.Columns["Enable"].DataPropertyName = "Enable";
                 dataGridView1.Columns["Command"].DataPropertyName = "Command";
                 dataGridView1.Columns["Result"].DataPropertyName = "Result";
-                dataGridView1.DataSource = new Commands().getCustomCommandTable();
+                dataGridView1.DataSource = new DB().getCustomCommandTable();
             } catch(Exception) {
             }
         }

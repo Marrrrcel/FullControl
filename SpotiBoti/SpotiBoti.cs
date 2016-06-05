@@ -18,7 +18,7 @@ namespace SpotiBoti
     public partial class SpotiBoti : Form
     {
         private Twitch _twitch;
-        private Commands _commands;
+        private SpotiBotiCore.Database.DB _commands;
 
         IrcInfo ircInfo = new IrcInfo();
 
@@ -113,7 +113,7 @@ namespace SpotiBoti
 
         #region Private methods
         private void Initilize() {
-            _commands = new Commands();
+            _commands = new DB();
 
             //TODO: Get this info of User...
             ircInfo.Username = "spotiboti";

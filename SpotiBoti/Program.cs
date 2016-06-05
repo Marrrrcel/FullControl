@@ -21,8 +21,7 @@ namespace SpotiBoti
                 if(!Spotify.SpotifyRunning) {
                     DialogResult result = MessageBox.Show("Starting Spotify...", "Starting Spotify...", MessageBoxButtons.OKCancel);
                     if(result == DialogResult.OK) {
-                        Spotify.StartSpotifyWebHelper();
-                        Spotify.StartSpotify();
+                        SpotiBotiCore.SpotifyCore.SpotifyStart();
                         Application.Run(new SpotiBoti());
                     } else if(result == DialogResult.Cancel) {
                         Application.Exit();

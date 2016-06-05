@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using nSpotify;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -35,6 +31,11 @@ namespace SpotiBotiCore
         public SpotifyCore()
         {
             
+        }
+
+        public static void SpotifyStart() {
+            Spotify.StartSpotifyWebHelper();
+            Spotify.StartSpotify();
         }
     }
 }

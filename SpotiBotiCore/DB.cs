@@ -7,29 +7,12 @@ using System.Data;
 
 namespace SpotiBotiCore {
     namespace Database {
-        public class Commands {
+        public class DB {
             private SQLiteConnection _sqliteConnection;
             private SQLiteCommand _sqliteCommand;
 
-            //Create DB strings
-            const string Databasefolder = @"bin/database/";
-            const string Databasename = "commands.db";
-            const string CreateGenericCommandTable = "create table if not exists GenericCommands (enabled int, command varchat(50), result varchar(255))";
-            const string CreateCustomCommandTable = "create table if not exists CustomCommands (enabled int, command varchat(50), result varchar(255))";
-            const string CreateLogTable = "create table if not exists Log (enabled varchar(1))";
-
-            //Generic commands
-            const string AddUptime = "insert into GenericCommands (enabled, command, result) values (1, '!uptime', 'CURRENT UPTIME');";
-            const string AddTime = "insert into GenericCommands (enabled, command, result) values (1, '!time', 'CURRENT TIME');";
-            const string AddCustom1 = "insert into CustomCommands (enabled, command, result) values (1, '!currentsong', 'CURRENT Song: $track - $artist');";
-            const string AddCustom2 = "insert into CustomCommands (enabled, command, result) values (0, '!currentalbum', 'CURRENT Song Album: $album');";
-            string[] GC = new string[] { AddUptime, AddTime, AddCustom1, AddCustom2 };
-
-            //Disable log by default
-            const string DefaultInsertEnableLog = "insert into Log (enabled) values ('0');";
-
             //Runtime Datatable to search in.
-            // TODO: Maybe edit aswell
+            // TODO: Maybe to edit aswell
             public DataTable _currentCustomCommandsDatatable = new DataTable();
 
             //Runtime SQLiteDataAdapter/SQLiteDataReader to work with
@@ -37,7 +20,7 @@ namespace SpotiBotiCore {
             SQLiteDataReader _sqliteDataReader;
 
             //Constructor
-            public Commands() {
+            public DB() {
                 Initialize();
             }
 
@@ -105,13 +88,6 @@ namespace SpotiBotiCore {
                 return result;
             }
 
-            //Create default database
-            public void CreateDB() {
-                ExecuteQuery(CreateGenericCommandTable);
-                ExecuteQuery(CreateCustomCommandTable);
-                ExecuteQuery(CreateLogTable);
-                AddGenericCommands();
-            }
 
             //Return true if log is enabled; Return false if log is disabled
             public bool getLog() {
@@ -162,8 +138,8 @@ namespace SpotiBotiCore {
             #region Private methods
             //Initialize
             private void Initialize() {
-                CreateDBFile(Databasefolder, Databasename);
-                _sqliteConnection = new SQLiteConnection(@"Data Source=" + Databasefolder + Databasename +";Version=3");
+                CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
+                _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
                 CreateDB();
 
                 _sqliteConnection.Open();
@@ -171,6 +147,14 @@ namespace SpotiBotiCore {
                 _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
                 _sqliteDataAdapter.Fill(_currentCustomCommandsDatatable);
                 _sqliteConnection.Close();
+            }
+
+            //Create default database
+            private void CreateDB() {
+                ExecuteQuery(StaticDBStrings.CreateGenericCommandTable);
+                ExecuteQuery(StaticDBStrings.CreateCustomCommandTable);
+                ExecuteQuery(StaticDBStrings.CreateLogTable);
+                AddGenericCommands();
             }
 
             //Create database file
@@ -186,12 +170,12 @@ namespace SpotiBotiCore {
             //Add generic command to database
             private void AddGenericCommands() {
                 if(TableIsEmpty("SELECT * FROM GenericCommands where command='!uptime'")) {
-                    foreach(string item in GC) {
+                    foreach(string item in StaticDBStrings.GC) {
                         ExecuteQuery(item);
                     }
                 }
                 if(TableIsEmpty("SELECT * FROM Log;")) {
-                    ExecuteQuery(DefaultInsertEnableLog);
+                    ExecuteQuery(StaticDBStrings.DefaultInsertEnableLog);
                 }
             }
 
