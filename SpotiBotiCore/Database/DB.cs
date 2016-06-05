@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SQLite;
+﻿using System.Data.SQLite;
 using System.Data;
+using System.IO;
 
-namespace SpotiBotiCore {
-    namespace Database {
+namespace SpotiBotiCore { namespace Database {
         public class DB {
             private SQLiteConnection _sqliteConnection;
             private SQLiteCommand _sqliteCommand;
@@ -21,7 +17,7 @@ namespace SpotiBotiCore {
 
             //Constructor
             public DB() {
-                Initialize();
+                    Initialize();
             }
 
             #region Public methods
@@ -90,9 +86,9 @@ namespace SpotiBotiCore {
 
 
             //Return true if log is enabled; Return false if log is disabled
-            public bool getLog() {
+            public bool getLogEnabled() {
                 _sqliteConnection.Open();
-                string temp = "select enabled from Log;";
+                string temp = "select enabled from Settings where setting = 'Log';";
                 string result = "";
                 _sqliteCommand = new SQLiteCommand(temp, _sqliteConnection);
                 _sqliteDataReader = _sqliteCommand.ExecuteReader();
@@ -118,7 +114,7 @@ namespace SpotiBotiCore {
                     _newValue = "0";
                     _oldValue = "1";
                 }
-                ExecuteQuery("update Log set enabled = '" + _newValue + "' where enabled='" + _oldValue + "';");
+                ExecuteInsertUpdateQuery("update Settings set enabled = '" + _newValue + "' where enabled='" + _oldValue + "' and setting='Log';");
             }
 
             //Enable/Disable generic command to database
@@ -140,27 +136,29 @@ namespace SpotiBotiCore {
             private void Initialize() {
                 CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
                 _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
-                CreateDB();
+                if(!File.Exists(StaticDBStrings.Databasefolder + "/" + StaticDBStrings.Databasename))
+                    CreateDB();
 
-                _sqliteConnection.Open();
-                _sqliteCommand = new SQLiteCommand("SELECT Command,Result FROM CustomCommands WHERE enabled = '1';", _sqliteConnection);
-                _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
-                _sqliteDataAdapter.Fill(_currentCustomCommandsDatatable);
-                _sqliteConnection.Close();
+                //_sqliteConnection.Open();
+                //_sqliteCommand = new SQLiteCommand("SELECT Command,Result FROM CustomCommands WHERE enabled = '1';", _sqliteConnection);
+                //_sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
+                //_sqliteDataAdapter.Fill(_currentCustomCommandsDatatable);
+                //_sqliteConnection.Close();
             }
 
             //Create default database
             private void CreateDB() {
-                ExecuteQuery(StaticDBStrings.CreateGenericCommandTable);
-                ExecuteQuery(StaticDBStrings.CreateCustomCommandTable);
-                ExecuteQuery(StaticDBStrings.CreateLogTable);
+                ExecuteInsertUpdateQuery(StaticDBStrings.CreateGenericCommandTable);
+                ExecuteInsertUpdateQuery(StaticDBStrings.CreateCustomCommandTable);
+                ExecuteInsertUpdateQuery(StaticDBStrings.CreateSettingTable);
                 AddGenericCommands();
+                AddSetting();
             }
 
             //Create database file
             private void CreateDBFile(string path, string name) {
-                if(!System.IO.Directory.Exists(path)) {
-                    System.IO.Directory.CreateDirectory(path);
+                if(!Directory.Exists(path)) {
+                    Directory.CreateDirectory(path);
                 }
                 if(!System.IO.File.Exists(path + name)) {
                     SQLiteConnection.CreateFile(path + name);
@@ -169,18 +167,23 @@ namespace SpotiBotiCore {
 
             //Add generic command to database
             private void AddGenericCommands() {
-                if(TableIsEmpty("SELECT * FROM GenericCommands where command='!uptime'")) {
+                if(TableIsEmpty("GenericCommands")) {
                     foreach(string item in StaticDBStrings.GC) {
-                        ExecuteQuery(item);
+                        ExecuteInsertUpdateQuery(item);
                     }
                 }
-                if(TableIsEmpty("SELECT * FROM Log;")) {
-                    ExecuteQuery(StaticDBStrings.DefaultInsertEnableLog);
+            }
+
+            //Add settings to database
+            private void AddSetting() {
+                if(TableIsEmpty("Settings")) {
+                    ExecuteInsertUpdateQuery(StaticDBStrings.InsertLogSetting);
+                    ExecuteInsertUpdateQuery(StaticDBStrings.InsertSpotifyAutoSongChangeSetting);
                 }
             }
 
             //Default executer to database
-            private void ExecuteQuery(string Query) {
+            private void ExecuteInsertUpdateQuery(string Query) {
                 _sqliteConnection.Open();
                 _sqliteCommand = new SQLiteCommand(Query, _sqliteConnection);
                 _sqliteCommand.ExecuteNonQuery();
@@ -189,9 +192,9 @@ namespace SpotiBotiCore {
             }
 
             //Return true if specified table is empty; Return false if specified table is not empty
-            private bool TableIsEmpty(string select) {
+            private bool TableIsEmpty(string Table) {
                 _sqliteConnection.Open();
-                _sqliteCommand = new SQLiteCommand(select, _sqliteConnection);
+                _sqliteCommand = new SQLiteCommand("SELECT * FROM " + Table, _sqliteConnection);
                 _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
                 DataTable _dataTable = new DataTable();
                 _sqliteDataAdapter.Fill(_dataTable);

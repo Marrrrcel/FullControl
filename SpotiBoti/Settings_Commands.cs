@@ -38,7 +38,8 @@ namespace SpotiBoti
                 dataGridView1.Columns["Command"].DataPropertyName = "Command";
                 dataGridView1.Columns["Result"].DataPropertyName = "Result";
                 dataGridView1.DataSource = new DB().getCustomCommandTable();
-            } catch(Exception) {
+            } catch(Exception ex) {
+                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Error, "Settings_Commands_Load");
             }
         }
 
@@ -47,7 +48,7 @@ namespace SpotiBoti
             //ExportGridToCSV();
             //new Commands().updateCustomCommandTable((DataTable)dataGridView1.DataSource);
         }
-        private void ExportGridToCSV()
+        private void ExportCustomCommandsGridToCSV()
         {
             string CsvFpath = @"commands.txt";
             try
@@ -92,9 +93,9 @@ namespace SpotiBoti
                 csvFileWriter.Flush();
                 csvFileWriter.Close();
             }
-            catch (Exception exceptionObject)
+            catch (Exception ex)
             {
-                MessageBox.Show(exceptionObject.ToString());
+                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Error, "ExportCustomCommandsGridToCSV");
             }
 
         }

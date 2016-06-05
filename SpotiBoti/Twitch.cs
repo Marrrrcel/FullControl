@@ -9,12 +9,11 @@ using System.Drawing;
 using nSpotify;
 using System.Windows.Forms;
 using SpotiBotiCore.Database;
+using SpotiBotiCore.Log;
 
 namespace SpotiBoti {
     public class Twitch {
 
-        public  bool enableLog = false;
-        private const string LogPath = @"twitch.log";
         private string Lastsong = "";
         
         private SpotiBoti spotiBoti;
@@ -25,8 +24,7 @@ namespace SpotiBoti {
         public DB commands;
 
         //Constructor
-        public Twitch(SpotiBoti _spotiBoti, IrcInfo _ircInfo, bool _enableLog, DB _commands) {
-            this.enableLog = _enableLog;
+        public Twitch(SpotiBoti _spotiBoti, IrcInfo _ircInfo, DB _commands) {
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;
             this.commands = _commands;
@@ -57,12 +55,12 @@ namespace SpotiBoti {
                         username = getUsername(message);
                         messageonly = getChatline(message);
                     }
-                    spotiBoti.LogToLog(enableLog, LogPath, message);
+                    Logging.Log(message, Logging.Loglevel.Info);
                     spotiBoti.LogToConnect(message);
                     ProcessMessage(message, username, messageonly);
                 }
             } catch(Exception ex) {
-                MessageBox.Show(ex.Message);
+                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Warning);
             }
         }
 
@@ -98,7 +96,7 @@ namespace SpotiBoti {
 
                 foreach(string[] msg in ReturnCustomCommands()) {
                     ircClient.IrcSendChatMessage(msg[0]);
-                    spotiBoti.LogToLog(enableLog, LogPath, msg[0]);
+                    Logging.Log(msg[0], Logging.Loglevel.Info);
                     spotiBoti.LogToChat("BOT", msg[0]);
                     Thread.Sleep(1000);
                 }
@@ -121,7 +119,7 @@ namespace SpotiBoti {
                         .Replace("$uptime", Uptime.ToString());
                     ircClient.IrcSendChatMessage(result);
                     Thread.Sleep(2000);
-                    spotiBoti.LogToLog(enableLog, LogPath, result);
+                    Logging.Log(result, Logging.Loglevel.Info);
                     spotiBoti.LogToChat("BOT", result);
                 }
             }
