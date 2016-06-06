@@ -26,8 +26,8 @@ namespace TBot
         SpotifyCore spCore = new SpotifyCore();
         private bool p;
 
-        //Constructor
-        public TBot() {
+        public TBot(IrcInfo _ircInfo) {
+            this.ircInfo = _ircInfo;
             InitializeComponent();
 #if true
             Initilize();
@@ -37,8 +37,16 @@ namespace TBot
 #endif
         }
 
-        public TBot(bool IsSpotifyEnabled) {
+        public TBot(IrcInfo _ircInfo, bool IsSpotifyEnabled) {
             // TODO: Initialize but without Spotify
+            this.ircInfo = _ircInfo;
+            InitializeComponent();
+#if true
+            Initilize();
+
+#else
+            DoTest();
+#endif
         }
 
         #region Testing methods
@@ -118,9 +126,9 @@ namespace TBot
             _commands = new DB();
 
             //TODO: Get this info of User...
-            ircInfo.Username = "spotiboti";
-            ircInfo.Channel = "mrrrrcl";
-            ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezI";
+            //ircInfo.Username = "spotiboti";
+            //ircInfo.Channel = "mrrrrcl";
+            //ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezI";
 
             bool EnableLog = _commands.getLogEnabled();
             _twitch = new Twitch(this, ircInfo, _commands);
