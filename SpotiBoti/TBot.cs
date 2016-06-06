@@ -2,8 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using nSpotify;
-using SpotiBotiCore;
-using SpotiBotiCore.Database;
+using TBotCore;
+using TBotCore.Database;
 using System.Data;
 
 //Using for testingmethods
@@ -13,12 +13,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace SpotiBoti
+namespace TBot
 {
-    public partial class SpotiBoti : Form
+    public partial class TBot : Form
     {
         private Twitch _twitch;
-        private SpotiBotiCore.Database.DB _commands;
+        private TBotCore.Database.DB _commands;
 
         IrcInfo ircInfo = new IrcInfo();
 
@@ -27,7 +27,7 @@ namespace SpotiBoti
         private bool p;
 
         //Constructor
-        public SpotiBoti() {
+        public TBot() {
             InitializeComponent();
 #if true
             Initilize();
@@ -37,7 +37,7 @@ namespace SpotiBoti
 #endif
         }
 
-        public SpotiBoti(bool IsSpotifyEnabled) {
+        public TBot(bool IsSpotifyEnabled) {
             // TODO: Initialize but without Spotify
         }
 
@@ -64,8 +64,8 @@ namespace SpotiBoti
                 var streamReader = new StreamReader(httpResponse.GetResponseStream());
                 return streamReader.ReadToEnd();
             } catch(Exception ex ) {
-                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Warning);
-                SpotiBotiCore.Log.Logging.Log("User is not following the stream!", SpotiBotiCore.Log.Logging.Loglevel.Warning);
+                TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
+                TBotCore.Log.Logging.Log("User is not following the stream!", TBotCore.Log.Logging.Loglevel.Warning);
                 return "User is not following the stream!";
             }
         }
@@ -120,7 +120,7 @@ namespace SpotiBoti
             //TODO: Get this info of User...
             ircInfo.Username = "spotiboti";
             ircInfo.Channel = "mrrrrcl";
-            ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezi";
+            ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezI";
 
             bool EnableLog = _commands.getLogEnabled();
             _twitch = new Twitch(this, ircInfo, _commands);
@@ -156,7 +156,7 @@ namespace SpotiBoti
             this.Close();
         }
         private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            new SpotiBotiCore.Database.DB().setLog(enableLogToolStripMenuItem.Checked);
+            new TBotCore.Database.DB().setLog(enableLogToolStripMenuItem.Checked);
         }
         private void enableLogToolStripMenuItem_Click(object sender, EventArgs e) {
             if(enableLogToolStripMenuItem.Checked) {

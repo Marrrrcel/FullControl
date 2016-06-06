@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SpotiBoti
+namespace TBot
 {
     public partial class TwitchLogin : Form
     {

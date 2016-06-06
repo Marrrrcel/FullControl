@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotiBotiCore {
+namespace TBotCore {
     namespace Database {
         public static class SpotifyDatabase {
             public static bool IsSpotifyEnabled {

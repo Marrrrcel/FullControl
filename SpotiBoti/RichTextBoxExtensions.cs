@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using nSpotify;
 using System.Threading;
 
-namespace SpotiBoti
+namespace TBot
 {
     public static class RichTextBoxExtensions
     {

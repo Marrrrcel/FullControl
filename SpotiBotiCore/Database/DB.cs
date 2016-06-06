@@ -2,7 +2,7 @@
 using System.Data;
 using System.IO;
 
-namespace SpotiBotiCore { namespace Database {
+namespace TBotCore { namespace Database {
         public class DB {
             private SQLiteConnection _sqliteConnection;
             private SQLiteCommand _sqliteCommand;
@@ -136,7 +136,7 @@ namespace SpotiBotiCore { namespace Database {
             private void Initialize() {
                 CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
                 _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
-                if(!File.Exists(StaticDBStrings.Databasefolder + "/" + StaticDBStrings.Databasename))
+                if(TableIsEmpty("Settings"))
                     CreateDB();
 
                 //_sqliteConnection.Open();
@@ -193,18 +193,23 @@ namespace SpotiBotiCore { namespace Database {
 
             //Return true if specified table is empty; Return false if specified table is not empty
             private bool TableIsEmpty(string Table) {
-                _sqliteConnection.Open();
-                _sqliteCommand = new SQLiteCommand("SELECT * FROM " + Table, _sqliteConnection);
-                _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
-                DataTable _dataTable = new DataTable();
-                _sqliteDataAdapter.Fill(_dataTable);
-                DataRow _dataRow = _dataTable.NewRow();
-                if(_dataTable == null || _dataTable.Rows.Count == 0) {
+                try {
+                    _sqliteConnection.Open();
+                    _sqliteCommand = new SQLiteCommand("SELECT * FROM " + Table, _sqliteConnection);
+                    _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
+                    DataTable _dataTable = new DataTable();
+                    _sqliteDataAdapter.Fill(_dataTable);
+                    DataRow _dataRow = _dataTable.NewRow();
+                    if(_dataTable == null || _dataTable.Rows.Count == 0) {
+                        _sqliteConnection.Close();
+                        return true;
+                    } else {
+                        _sqliteConnection.Close();
+                        return false;
+                    }
+                } catch(System.Exception) {
                     _sqliteConnection.Close();
                     return true;
-                } else {
-                    _sqliteConnection.Close();
-                    return false;
                 }
             }
             #endregion

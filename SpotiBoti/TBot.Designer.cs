@@ -1,6 +1,6 @@
-﻿namespace SpotiBoti
+﻿namespace TBot
 {
-    partial class SpotiBoti
+    partial class TBot
     {
         /// <summary>
         /// Required designer variable.

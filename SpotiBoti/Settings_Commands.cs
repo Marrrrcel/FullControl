@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
-using SpotiBotiCore.Database;
+using TBotCore.Database;
 
-namespace SpotiBoti
+namespace TBot
 {
     public partial class Settings_Commands : Form
     {
@@ -39,7 +39,7 @@ namespace SpotiBoti
                 dataGridView1.Columns["Result"].DataPropertyName = "Result";
                 dataGridView1.DataSource = new DB().getCustomCommandTable();
             } catch(Exception ex) {
-                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Error, "Settings_Commands_Load");
+                TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Error, "Settings_Commands_Load");
             }
         }
 
@@ -95,7 +95,7 @@ namespace SpotiBoti
             }
             catch (Exception ex)
             {
-                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Error, "ExportCustomCommandsGridToCSV");
+                TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Error, "ExportCustomCommandsGridToCSV");
             }
 
         }

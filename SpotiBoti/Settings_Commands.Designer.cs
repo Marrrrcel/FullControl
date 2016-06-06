@@ -1,4 +1,4 @@
-﻿namespace SpotiBoti
+﻿namespace TBot
 {
     partial class Settings_Commands
     {

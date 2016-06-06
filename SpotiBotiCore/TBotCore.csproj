@@ -7,7 +7,7 @@
     <ProjectGuid>{6DB40F15-4280-4403-9F30-52C23BBED0BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpotiBotiCore</RootNamespace>
+    <RootNamespace>TBotCore</RootNamespace>
     <AssemblyName>SpotiBotiCore</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SpotiBotiCore;
+using TBotCore;
 using System.Drawing;
 using nSpotify;
 using System.Windows.Forms;
-using SpotiBotiCore.Database;
-using SpotiBotiCore.Log;
+using TBotCore.Database;
+using TBotCore.Log;
 
-namespace SpotiBoti {
+namespace TBot {
     public class Twitch {
 
+        
         private string Lastsong = "";
         
-        private SpotiBoti spotiBoti;
+        private TBot spotiBoti;
         private IrcInfo ircInfo;
         private DateTime TimeOfBotStarted = DateTime.Now;
         public IrcClient ircClient;
@@ -24,7 +25,7 @@ namespace SpotiBoti {
         public DB commands;
 
         //Constructor
-        public Twitch(SpotiBoti _spotiBoti, IrcInfo _ircInfo, DB _commands) {
+        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _commands) {
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;
             this.commands = _commands;
@@ -60,7 +61,7 @@ namespace SpotiBoti {
                     ProcessMessage(message, username, messageonly);
                 }
             } catch(Exception ex) {
-                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Warning);
+                TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
             }
         }
 

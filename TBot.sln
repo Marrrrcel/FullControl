@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiBoti", "SpotiBoti\SpotiBoti.csproj", "{2DE2B1B6-0905-4DCF-A439-67970E9A76C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBot", "SpotiBoti\TBot.csproj", "{2DE2B1B6-0905-4DCF-A439-67970E9A76C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpotiBotiCore", "SpotiBotiCore\SpotiBotiCore.csproj", "{6DB40F15-4280-4403-9F30-52C23BBED0BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TBotCore", "SpotiBotiCore\TBotCore.csproj", "{6DB40F15-4280-4403-9F30-52C23BBED0BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SpotiBotiCore { namespace Database {
+namespace TBotCore { namespace Database {
         public static class StaticDBStrings {
             //Create DB strings
             public static string Databasefolder = @"bin/database/";
