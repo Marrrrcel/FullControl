@@ -6,29 +6,70 @@ using SpotiBotiCore;
 using SpotiBotiCore.Database;
 using System.Data;
 
-namespace SpotiBoti {
+//Using for testingmethods
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+
+namespace SpotiBoti
+{
     public partial class SpotiBoti : Form
     {
         private Twitch _twitch;
-        private CmdDatabase _commands;
+        private SpotiBotiCore.Database.DB _commands;
 
         IrcInfo ircInfo = new IrcInfo();
 
         //TODO: Move to Twitch.cs etc...
         SpotifyCore spCore = new SpotifyCore();
+        private bool p;
+
         //Constructor
         public SpotiBoti() {
             InitializeComponent();
-
+#if true
             Initilize();
 
-            //string commandgotbychatline = "!currentsong";
-            //DataRow[] result = _commands._currentCustomCommandsDatatable.Select("Command = '" + commandgotbychatline + "'");
-            //if(result.Length == 1)
-            //    txtChat.AppendLine(result[0][0] + " - " + result[0][1]);
-
-            //https://api.twitch.tv/kraken/users/mrrrrcl/follows/channels/hardlydifficult
+#else
+            DoTest();
+#endif
         }
+
+        public SpotiBoti(bool IsSpotifyEnabled) {
+            // TODO: Initialize but without Spotify
+        }
+
+        #region Testing methods
+        private void DoTest() {
+#if false
+            string commandgotbychatline = "!currentsong";
+            DataRow[] result = _commands._currentCustomCommandsDatatable.Select("Command = '" + commandgotbychatline + "'");
+            if(result.Length == 1)
+                txtChat.AppendLine(result[0][0] + " - " + result[0][1]);
+#else
+            //https://api.twitch.tv/kraken/users/mrrrrcl/follows/channels/hardlydifficult
+            txtChat.Text = isFollowingMyStream("marceld89");
+#endif
+        }
+        private string isFollowingMyStream(string username) {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"https://api.twitch.tv/kraken/users/" + username + "/follows/channels/hardlydifficult");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Accept = "*/*";
+            httpWebRequest.Method = "GET";
+
+            try {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                var streamReader = new StreamReader(httpResponse.GetResponseStream());
+                return streamReader.ReadToEnd();
+            } catch(Exception ex ) {
+                SpotiBotiCore.Log.Logging.Log(ex.Message, SpotiBotiCore.Log.Logging.Loglevel.Warning);
+                SpotiBotiCore.Log.Logging.Log("User is not following the stream!", SpotiBotiCore.Log.Logging.Loglevel.Warning);
+                return "User is not following the stream!";
+            }
+        }
+        #endregion
 
         #region Custom methods
         #region Public methods
@@ -74,15 +115,15 @@ namespace SpotiBoti {
 
         #region Private methods
         private void Initilize() {
-            _commands = new CmdDatabase();
+            _commands = new DB();
 
             //TODO: Get this info of User...
             ircInfo.Username = "spotiboti";
             ircInfo.Channel = "mrrrrcl";
-            ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezl";
+            ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezi";
 
-            bool EnableLog = _commands.getLog();
-            _twitch = new Twitch(this, ircInfo, EnableLog, _commands);
+            bool EnableLog = _commands.getLogEnabled();
+            _twitch = new Twitch(this, ircInfo, _commands);
             enableLogToolStripMenuItem.Checked = EnableLog;
         }
         #endregion
@@ -115,7 +156,7 @@ namespace SpotiBoti {
             this.Close();
         }
         private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            _twitch.enableLog = enableLogToolStripMenuItem.Checked;
+            new SpotiBotiCore.Database.DB().setLog(enableLogToolStripMenuItem.Checked);
         }
         private void enableLogToolStripMenuItem_Click(object sender, EventArgs e) {
             if(enableLogToolStripMenuItem.Checked) {

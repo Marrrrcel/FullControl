@@ -152,7 +152,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TwitchCore\SpotiBotiCore.csproj">
+    <ProjectReference Include="..\SpotiBotiCore\SpotiBotiCore.csproj">
       <Project>{6db40f15-4280-4403-9f30-52c23bbed0be}</Project>
       <Name>SpotiBotiCore</Name>
     </ProjectReference>

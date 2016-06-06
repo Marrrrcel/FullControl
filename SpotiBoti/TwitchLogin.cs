@@ -12,6 +12,7 @@ namespace SpotiBoti
 {
     public partial class TwitchLogin : Form
     {
+        //TODO: Need work later :)
         public TwitchLogin()
         {
             InitializeComponent();
