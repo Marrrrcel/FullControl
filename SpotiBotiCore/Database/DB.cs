@@ -23,7 +23,6 @@ namespace TBotCore { namespace Database {
             #region Public methods
             //Return settings datatable
             public DataTable getSettingsTable() {
-                //TODO: Create Settings table (enabled, setting) and move log to it and insert spotify enabler
                 _sqliteConnection.Open();
                 _sqliteCommand = new SQLiteCommand("select enabled Enable, setting Setting FROM Settings;", _sqliteConnection);
                 _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
@@ -103,6 +102,24 @@ namespace TBotCore { namespace Database {
                 }
             }
 
+            //Return true if SpotifyAutoSongChange is enabled; Return false if SpotifyAutoSongChange is disabled
+            public bool getSpotifyAutoSongChangeEnabled() {
+                _sqliteConnection.Open();
+                string temp = "select enabled from Settings where setting = 'SpotifyAutoSongChange';";
+                string result = "";
+                _sqliteCommand = new SQLiteCommand(temp, _sqliteConnection);
+                _sqliteDataReader = _sqliteCommand.ExecuteReader();
+                while(_sqliteDataReader.Read()) {
+                    result = _sqliteDataReader.GetString(0);
+                }
+                _sqliteConnection.Close();
+                if(result == "1") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
             //Enable/Disable log to database
             public void setLog(bool enable) {
                 string _newValue = "";
@@ -115,6 +132,20 @@ namespace TBotCore { namespace Database {
                     _oldValue = "1";
                 }
                 ExecuteInsertUpdateQuery("update Settings set enabled = '" + _newValue + "' where enabled='" + _oldValue + "' and setting='Log';");
+            }
+
+            //Enable/Disable SpotifyAutoSongChange to database
+            public void setSpotifyAutoSongChange(bool enable) {
+                string _newValue = "";
+                string _oldValue = "";
+                if(enable) {
+                    _newValue = "1";
+                    _oldValue = "0";
+                } else {
+                    _newValue = "0";
+                    _oldValue = "1";
+                }
+                ExecuteInsertUpdateQuery("update Settings set enabled = '" + _newValue + "' where enabled='" + _oldValue + "' and setting='SpotifyAutoSongChange';");
             }
 
             //Enable/Disable generic command to database

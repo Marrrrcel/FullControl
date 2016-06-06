@@ -24,25 +24,12 @@ namespace TBot
 
         //TODO: Move to Twitch.cs etc...
         SpotifyCore spCore = new SpotifyCore();
-        private bool p;
-
-        public TBot(IrcInfo _ircInfo) {
-            this.ircInfo = _ircInfo;
-            InitializeComponent();
-#if true
-            Initilize();
-
-#else
-            DoTest();
-#endif
-        }
 
         public TBot(IrcInfo _ircInfo, bool IsSpotifyEnabled) {
-            // TODO: Initialize but without Spotify
             this.ircInfo = _ircInfo;
             InitializeComponent();
 #if true
-            Initilize();
+            Initilize(IsSpotifyEnabled);
 
 #else
             DoTest();
@@ -122,17 +109,10 @@ namespace TBot
         #endregion
 
         #region Private methods
-        private void Initilize() {
+        private void Initilize(bool SpotifyEnabled) {
             _commands = new DB();
-
-            //TODO: Get this info of User...
-            //ircInfo.Username = "spotiboti";
-            //ircInfo.Channel = "mrrrrcl";
-            //ircInfo.OAuth = "oauth:9rvxhrc2fg4iiu153yh09uj02ekezI";
-
-            bool EnableLog = _commands.getLogEnabled();
-            _twitch = new Twitch(this, ircInfo, _commands);
-            enableLogToolStripMenuItem.Checked = EnableLog;
+            
+            _twitch = new Twitch(this, ircInfo, _commands, SpotifyEnabled);
         }
         #endregion
         #endregion
@@ -176,6 +156,21 @@ namespace TBot
                 enableLogToolStripMenuItem.CheckState = CheckState.Checked;
                 _commands.setLog(enableLogToolStripMenuItem.Checked);
             }
+        }
+        private void enableSpotifyAutosongchangeToolStripMenuItem_Click(object sender, EventArgs e) {
+            if(enableSpotifyAutosongchangeToolStripMenuItem.Checked) {
+                enableSpotifyAutosongchangeToolStripMenuItem.Checked = false;
+                enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Unchecked;
+                _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+            } else {
+                enableSpotifyAutosongchangeToolStripMenuItem.Checked = true;
+                enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Checked;
+                _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+            }
+        }
+        private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+            MessageBox.Show("Need restart to take effect!");
+            new TBotCore.Database.DB().setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
         }
 
         //TabControl events

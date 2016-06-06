@@ -21,8 +21,10 @@ namespace TBotCore { namespace Database {
             public static string[] GC = new string[] { AddUptime, AddTime, AddCustom1, AddCustom2 };
 
             //Settings
+            //Default Log off
             public static string InsertLogSetting = "insert into Settings (enabled, setting) values ('0', 'Log');";
-            public static string InsertSpotifyAutoSongChangeSetting = "insert into Settings (enabled, setting) values ('0', 'SpotifyAutoSongChange');";
+            //Default SpotifySongchange On
+            public static string InsertSpotifyAutoSongChangeSetting = "insert into Settings (enabled, setting) values ('1', 'SpotifyAutoSongChange');";
         }
     }
 }

@@ -10,11 +10,8 @@ namespace TBotCore {
         public static class SpotifyDatabase {
             public static bool IsSpotifyEnabled {
                 get {
-                    //Commands cmd = new Commands();
-                    //DataTable dt = cmd.getSettingsTable();
-                    return true; 
+                    return new TBotCore.Database.DB().getSpotifyAutoSongChangeEnabled();
                 }
-                set { IsSpotifyEnabled = value; }
             }
         }
     }

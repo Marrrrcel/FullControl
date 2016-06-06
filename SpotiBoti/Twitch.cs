@@ -25,22 +25,23 @@ namespace TBot {
         public DB commands;
 
         //Constructor
-        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _commands) {
+        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _commands, bool SpotifyEnabled) {
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;
             this.commands = _commands;
-            Initialize();
+            Initialize(SpotifyEnabled);
         }
 
         #region Private methods
         //Initialize
-        private void Initialize() {
+        private void Initialize(bool SpotifyEnabled) {
             this.ircClient = new IrcClient(ircInfo);
             this.twitchThread = new Thread(RunTwitch);
-            this.spotifyThread = new Thread(RunSpotify);
-
             this.twitchThread.Start();
-            this.spotifyThread.Start();
+            if(SpotifyEnabled) {
+                this.spotifyThread = new Thread(RunSpotify);
+                this.spotifyThread.Start();
+            }
         }
 
         //Main Twitch method

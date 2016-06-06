@@ -31,9 +31,6 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.spotifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.commandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genericCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +38,7 @@
             this.customQuotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableSpotifyAutosongchangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtChat = new System.Windows.Forms.RichTextBox();
@@ -58,7 +56,6 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.spotifyToolStripMenuItem,
             this.commandsToolStripMenuItem,
             this.logToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -81,29 +78,6 @@
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
-            // 
-            // spotifyToolStripMenuItem
-            // 
-            this.spotifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.playToolStripMenuItem,
-            this.pauseToolStripMenuItem});
-            this.spotifyToolStripMenuItem.Name = "spotifyToolStripMenuItem";
-            this.spotifyToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-            this.spotifyToolStripMenuItem.Text = "Spotify";
-            // 
-            // playToolStripMenuItem
-            // 
-            this.playToolStripMenuItem.Name = "playToolStripMenuItem";
-            this.playToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.playToolStripMenuItem.Text = "Play";
-            this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
-            // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
-            this.pauseToolStripMenuItem.Text = "Pause";
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // commandsToolStripMenuItem
             // 
@@ -144,20 +118,29 @@
             // logToolStripMenuItem
             // 
             this.logToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableLogToolStripMenuItem});
+            this.enableLogToolStripMenuItem,
+            this.enableSpotifyAutosongchangeToolStripMenuItem});
             this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-            this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.logToolStripMenuItem.Text = "Log";
+            this.logToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.logToolStripMenuItem.Text = "Settings";
             // 
             // enableLogToolStripMenuItem
             // 
             this.enableLogToolStripMenuItem.Checked = true;
             this.enableLogToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.enableLogToolStripMenuItem.Name = "enableLogToolStripMenuItem";
-            this.enableLogToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.enableLogToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.enableLogToolStripMenuItem.Text = "Enable Log";
             this.enableLogToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableLogToolStripMenuItem_CheckedChanged);
             this.enableLogToolStripMenuItem.Click += new System.EventHandler(this.enableLogToolStripMenuItem_Click);
+            // 
+            // enableSpotifyAutosongchangeToolStripMenuItem
+            // 
+            this.enableSpotifyAutosongchangeToolStripMenuItem.Name = "enableSpotifyAutosongchangeToolStripMenuItem";
+            this.enableSpotifyAutosongchangeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+            this.enableSpotifyAutosongchangeToolStripMenuItem.Text = "Enable Spotify Autosongchange";
+            this.enableSpotifyAutosongchangeToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged);
+            this.enableSpotifyAutosongchangeToolStripMenuItem.Click += new System.EventHandler(this.enableSpotifyAutosongchangeToolStripMenuItem_Click);
             // 
             // tabControl1
             // 
@@ -238,7 +221,7 @@
             this.txtLog.TabIndex = 2;
             this.txtLog.Text = "";
             // 
-            // SpotiBoti
+            // TBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -248,7 +231,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(497, 346);
-            this.Name = "SpotiBoti";
+            this.Name = "TBot";
             this.Text = "SpotiBoti";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SpotiBoti_FormClosing);
             this.menuStrip1.ResumeLayout(false);
@@ -266,9 +249,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem spotifyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem playToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem commandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem genericCommandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customCommandsToolStripMenuItem;
@@ -283,6 +263,7 @@
         public System.Windows.Forms.RichTextBox txtChat;
         private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableSpotifyAutosongchangeToolStripMenuItem;
 
     }
 }
