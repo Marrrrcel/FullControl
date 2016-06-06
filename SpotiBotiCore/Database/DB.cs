@@ -18,6 +18,16 @@ namespace TBotCore { namespace Database {
             //Constructor
             public DB() {
                     Initialize();
+                    if(TableIsEmpty("Settings"))
+                        CreateDB();
+            }
+
+            //TODO need to check how to do
+            public DB(DataTable dt) {
+                Initialize();
+                SQLiteDataAdapter dA = new SQLiteDataAdapter("select enabled Enable, command Command, result Result FROM CustomCommands;", _sqliteConnection);
+                dA.Update(dt);
+
             }
 
             #region Public methods
@@ -167,8 +177,6 @@ namespace TBotCore { namespace Database {
             private void Initialize() {
                 CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
                 _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
-                if(TableIsEmpty("Settings"))
-                    CreateDB();
 
                 //_sqliteConnection.Open();
                 //_sqliteCommand = new SQLiteCommand("SELECT Command,Result FROM CustomCommands WHERE enabled = '1';", _sqliteConnection);

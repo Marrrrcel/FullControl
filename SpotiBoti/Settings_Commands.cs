@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using System.IO;
 using TBotCore.Database;
+using System.Data;
+
 
 namespace TBot
 {
@@ -45,9 +47,12 @@ namespace TBot
 
         private void Settings_Commands_FormClosing(object sender, FormClosingEventArgs e)
         {
+            dataGridView1.EndEdit();
+            new DB((DataTable)dataGridView1.DataSource);
             //ExportGridToCSV();
             //new Commands().updateCustomCommandTable((DataTable)dataGridView1.DataSource);
         }
+
         private void ExportCustomCommandsGridToCSV()
         {
             string CsvFpath = @"commands.txt";
