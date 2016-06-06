@@ -130,13 +130,6 @@ namespace TBot
         }
 
         //ToolStrip events
-        private void playToolStripMenuItem_Click(object sender, EventArgs e) {
-            Spotify.SendPlayRequest();
-            //Spotify.SendPlayRequest("https://open.spotify.com/album/6KR3nUwkoVBcwMGEduOEIx");
-        }
-        private void pauseToolStripMenuItem_Click(object sender, EventArgs e) {
-            Spotify.SendPauseRequest();
-        }
         private void customCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
             new Settings_Commands().ShowDialog();
         }
@@ -144,7 +137,7 @@ namespace TBot
             this.Close();
         }
         private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            new TBotCore.Database.DB().setLog(enableLogToolStripMenuItem.Checked);
+            _commands.setLog(enableLogToolStripMenuItem.Checked);
         }
         private void enableLogToolStripMenuItem_Click(object sender, EventArgs e) {
             if(enableLogToolStripMenuItem.Checked) {
@@ -170,7 +163,7 @@ namespace TBot
         }
         private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
             MessageBox.Show("Need restart to take effect!");
-            new TBotCore.Database.DB().setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+            _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
         }
 
         //TabControl events

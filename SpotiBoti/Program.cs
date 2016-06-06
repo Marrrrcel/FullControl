@@ -16,10 +16,9 @@ namespace TBot {
             if(System.IO.File.Exists(@"bin/data.txt")) {
                 var _ircInfo = System.IO.File.ReadAllLines(@"bin/data.txt");
                 if(_ircInfo.Length == 3) {
-                var _ircInfoChannel = _ircInfo[0].Split(',');
-                var _ircInfoUsername = _ircInfo[1].Split(',');
-                var _ircoInfoOAuth = _ircInfo[2].Split(',');
-                
+                    var _ircInfoChannel = _ircInfo[0].Split(',');
+                    var _ircInfoUsername = _ircInfo[1].Split(',');
+                    var _ircoInfoOAuth = _ircInfo[2].Split(',');
                     ircInfo.Channel = _ircInfoChannel[1];
                     ircInfo.Username = _ircInfoUsername[1];
                     ircInfo.OAuth = _ircoInfoOAuth[1];
