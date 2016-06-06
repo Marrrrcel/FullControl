@@ -18,7 +18,7 @@ namespace TBot
     public partial class TBot : Form
     {
         private Twitch _twitch;
-        private TBotCore.Database.DB _commands;
+        private DB _commands;
 
         IrcInfo ircInfo = new IrcInfo();
 
@@ -27,10 +27,11 @@ namespace TBot
 
         public TBot(IrcInfo _ircInfo, bool IsSpotifyEnabled) {
             this.ircInfo = _ircInfo;
+
             InitializeComponent();
+
 #if true
             Initilize(IsSpotifyEnabled);
-
 #else
             DoTest();
 #endif
@@ -111,7 +112,9 @@ namespace TBot
         #region Private methods
         private void Initilize(bool SpotifyEnabled) {
             _commands = new DB();
-            
+
+            enableLogToolStripMenuItem.Checked = _commands.getLogEnabled();
+            enableSpotifyAutosongchangeToolStripMenuItem.Checked = _commands.getSpotifyAutoSongChangeEnabled();
             _twitch = new Twitch(this, ircInfo, _commands, SpotifyEnabled);
         }
         #endregion
@@ -162,7 +165,6 @@ namespace TBot
             }
         }
         private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            MessageBox.Show("Need restart to take effect!");
             _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
         }
 

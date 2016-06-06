@@ -139,6 +139,7 @@
             this.enableSpotifyAutosongchangeToolStripMenuItem.Name = "enableSpotifyAutosongchangeToolStripMenuItem";
             this.enableSpotifyAutosongchangeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
             this.enableSpotifyAutosongchangeToolStripMenuItem.Text = "Enable Spotify Autosongchange";
+            this.enableSpotifyAutosongchangeToolStripMenuItem.ToolTipText = "Needs a restart to take effect!";
             this.enableSpotifyAutosongchangeToolStripMenuItem.CheckedChanged += new System.EventHandler(this.enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged);
             this.enableSpotifyAutosongchangeToolStripMenuItem.Click += new System.EventHandler(this.enableSpotifyAutosongchangeToolStripMenuItem_Click);
             // 
