@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using nSpotify;
 using TBotCore;
 using TBotCore.Database;
-using System.Data;
 
 //Using for testingmethods
 using System.Net;
@@ -36,12 +34,6 @@ namespace TBot
             DoTest();
 #endif
         }
-
-        #region ONLYFORDEBUG
-        public void error() {
-            this.Text += "there was an error!!!";
-        }
-        #endregion
 
         #region Testing methods
         private void DoTest() {

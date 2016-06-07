@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TBotCore {
     namespace Log {
@@ -38,6 +34,8 @@ namespace TBotCore {
                     case Loglevel.Error:
                         LogPath += "Error.log";
                         LogEnabled = true;
+                        //Just for Debug
+                        System.Windows.Forms.MessageBox.Show("ups, there was an error!");
                         break;
                     default:
                         LogPath += "Debug.log";
