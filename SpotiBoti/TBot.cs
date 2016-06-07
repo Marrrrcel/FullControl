@@ -37,6 +37,12 @@ namespace TBot
 #endif
         }
 
+        #region ONLYFORDEBUG
+        public void error() {
+            this.Text += "there was an error!!!";
+        }
+        #endregion
+
         #region Testing methods
         private void DoTest() {
 #if false
@@ -103,9 +109,11 @@ namespace TBot
 
         //Write to formtitle
         public void UpdateFormText(string text) {
-            Invoke(new Action(() => {
-                this.Text = text;
-            }));
+            if(!this.Text.Contains("there was an error!!!")) {
+                Invoke(new Action(() => {
+                    this.Text = text;
+                }));
+            }
         }
         #endregion
 
