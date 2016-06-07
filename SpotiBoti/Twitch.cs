@@ -10,6 +10,7 @@ using nSpotify;
 using System.Windows.Forms;
 using TBotCore.Database;
 using TBotCore.Log;
+using System.Data;
 
 namespace TBot {
     public class Twitch {
@@ -21,13 +22,13 @@ namespace TBot {
         private DateTime TimeOfBotStarted = DateTime.Now;
         public IrcClient ircClient;
         public Thread twitchThread, spotifyThread;
-        public DB commands;
+        public DB _dataBase;
 
         //Constructor
-        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _commands, bool SpotifyEnabled) {
+        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _dataBase, bool SpotifyEnabled) {
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;
-            this.commands = _commands;
+            this._dataBase = _dataBase;
             Initialize(SpotifyEnabled);
         }
 
@@ -61,7 +62,9 @@ namespace TBot {
                     ProcessMessage(message, username, messageonly);
                 }
             } catch(Exception ex) {
-                TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
+                if(!ex.Message.ToLower().Contains("thread")) {
+                    TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
+                }
             }
         }
 
@@ -108,7 +111,7 @@ namespace TBot {
                 spotiBoti.UpdateFormText("SpotiBoti - NEW SONGREQUEST!!!");
             }
 
-            foreach(string[] msg in ReturnCustomCommands()) {
+            foreach(var msg in ReturnCustomCommands()) {
                 if(Command.Contains(msg[0])) {
                     Status status = Spotify.DataProviderInstance.UpdateStatus();
                     TimeSpan Uptime = DateTime.Parse(DateTime.Now.ToLongTimeString()).Subtract(TimeOfBotStarted);
@@ -129,6 +132,9 @@ namespace TBot {
         //Returns string[][] of CurstomCommands
         //TODO: get these out of datbase
         private string[][] ReturnCustomCommands() {
+            DataTable dt = _dataBase.getCustomCommandTable();
+            DataRow[] result = dt.Select("enabled = 1");
+            //return result;
             return System.IO.File.ReadLines("commands.txt").Select(s => s.Split('|')).ToArray();
         }
 

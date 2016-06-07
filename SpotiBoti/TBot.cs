@@ -16,7 +16,7 @@ namespace TBot
     public partial class TBot : Form
     {
         private Twitch _twitch;
-        private DB _commands;
+        private DB _dataBase;
 
         IrcInfo ircInfo = new IrcInfo();
 
@@ -101,21 +101,19 @@ namespace TBot
 
         //Write to formtitle
         public void UpdateFormText(string text) {
-            if(!this.Text.Contains("there was an error!!!")) {
-                Invoke(new Action(() => {
-                    this.Text = text;
-                }));
-            }
+            Invoke(new Action(() => {
+                this.Text = text;
+            }));
         }
         #endregion
 
         #region Private methods
         private void Initilize(bool SpotifyEnabled) {
-            _commands = new DB();
+            _dataBase = new DB();
 
-            enableLogToolStripMenuItem.Checked = _commands.getLogEnabled();
-            enableSpotifyAutosongchangeToolStripMenuItem.Checked = _commands.getSpotifyAutoSongChangeEnabled();
-            _twitch = new Twitch(this, ircInfo, _commands, SpotifyEnabled);
+            enableLogToolStripMenuItem.Checked = _dataBase.getLogEnabled();
+            enableSpotifyAutosongchangeToolStripMenuItem.Checked = _dataBase.getSpotifyAutoSongChangeEnabled();
+            _twitch = new Twitch(this, ircInfo, _dataBase, SpotifyEnabled);
         }
         #endregion
         #endregion
@@ -143,32 +141,32 @@ namespace TBot
             this.Close();
         }
         private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            _commands.setLog(enableLogToolStripMenuItem.Checked);
+            _dataBase.setLog(enableLogToolStripMenuItem.Checked);
         }
         private void enableLogToolStripMenuItem_Click(object sender, EventArgs e) {
             if(enableLogToolStripMenuItem.Checked) {
                 enableLogToolStripMenuItem.Checked = false;
                 enableLogToolStripMenuItem.CheckState = CheckState.Unchecked;
-                _commands.setLog(enableLogToolStripMenuItem.Checked);
+                _dataBase.setLog(enableLogToolStripMenuItem.Checked);
             } else {
                 enableLogToolStripMenuItem.Checked = true;
                 enableLogToolStripMenuItem.CheckState = CheckState.Checked;
-                _commands.setLog(enableLogToolStripMenuItem.Checked);
+                _dataBase.setLog(enableLogToolStripMenuItem.Checked);
             }
         }
         private void enableSpotifyAutosongchangeToolStripMenuItem_Click(object sender, EventArgs e) {
             if(enableSpotifyAutosongchangeToolStripMenuItem.Checked) {
                 enableSpotifyAutosongchangeToolStripMenuItem.Checked = false;
                 enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Unchecked;
-                _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+                _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
             } else {
                 enableSpotifyAutosongchangeToolStripMenuItem.Checked = true;
                 enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Checked;
-                _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+                _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
             }
         }
         private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
-            _commands.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
+            _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
         }
 
         //TabControl events

@@ -55,6 +55,7 @@ namespace TBot
         private void Settings_Commands_FormClosing(object sender, FormClosingEventArgs e)
         {
             try {
+                dataGridView1.EndEdit();
                 sqlDataAdapter.Update(dataTable);
             } catch(Exception ex) {
                 TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Error, "Settings_Commands_FormClosing");
