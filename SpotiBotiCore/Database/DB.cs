@@ -22,15 +22,12 @@ namespace TBotCore { namespace Database {
                         CreateDB();
             }
 
-            //TODO need to check how to do
-            public DB(DataTable dt) {
-                Initialize();
-                SQLiteDataAdapter dA = new SQLiteDataAdapter("select enabled Enable, command Command, result Result FROM CustomCommands;", _sqliteConnection);
-                dA.Update(dt);
-
+            #region Public methods
+            //Update CustomCommandTable in Database
+            public void UpdateCustomCommandSQLiteTable(DataTable dataTable) {
+                new SQLiteDataAdapter(StaticDBStrings.SelectCustomCommandTable, _sqliteConnection).Update(dataTable);
             }
 
-            #region Public methods
             //Return settings datatable
             public DataTable getSettingsTable() {
                 _sqliteConnection.Open();

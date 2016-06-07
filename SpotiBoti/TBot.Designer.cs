@@ -95,6 +95,7 @@
             this.genericCommandsToolStripMenuItem.Name = "genericCommandsToolStripMenuItem";
             this.genericCommandsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.genericCommandsToolStripMenuItem.Text = "Generic Commands";
+            this.genericCommandsToolStripMenuItem.Click += new System.EventHandler(this.genericCommandsToolStripMenuItem_Click);
             // 
             // customCommandsToolStripMenuItem
             // 

@@ -9,9 +9,12 @@ namespace TBotCore { namespace Database {
             //Create DB strings
             public static string Databasefolder = @"bin/database/";
             public static string Databasename = "commands.db";
-            public static string CreateGenericCommandTable = "create table if not exists GenericCommands (enabled int, command varchat(50), result varchar(255))";
-            public static string CreateCustomCommandTable = "create table if not exists CustomCommands (enabled int, command varchat(50), result varchar(255))";
-            public static string CreateSettingTable = "create table if not exists Settings (enabled varchar(1), setting varchar(255))";
+            public static string CreateGenericCommandTable = "CREATE TABLE IF NOT EXISTS [GenericCommands] ([id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                                                "[enabled] int  NULL, [command] varchat(50)  NULL, [result] varchar(255)  NULL)";
+            public static string CreateCustomCommandTable = "CREATE TABLE IF NOT EXISTS [CustomCommands] ([id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                                                "[enabled] int  NULL, [command] varchat(50)  NULL, [result] varchar(255)  NULL)";
+            public static string CreateSettingTable = "CREATE TABLE IF NOT EXISTS [Settings] ([id] INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                                                        "[enabled] varchar(1)  NULL, [setting] varchar(255)  NULL)";
 
             //Generic commands
             private static string AddUptime = "insert into GenericCommands (enabled, command, result) values (1, '!uptime', 'CURRENT UPTIME');";
@@ -25,6 +28,11 @@ namespace TBotCore { namespace Database {
             public static string InsertLogSetting = "insert into Settings (enabled, setting) values ('0', 'Log');";
             //Default SpotifySongchange On
             public static string InsertSpotifyAutoSongChangeSetting = "insert into Settings (enabled, setting) values ('1', 'SpotifyAutoSongChange');";
+
+
+            //SELECT Strings
+            public static string SelectCustomCommandTable = "select id ID, enabled Enable, command Command, result Result FROM CustomCommands;";
+            public static string SelectGenericCommandTable = "select id ID, enabled Enable, command Command, result Result FROM GenericCommands;";
         }
     }
 }

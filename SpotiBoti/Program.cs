@@ -27,7 +27,7 @@ namespace TBot {
             if(String.IsNullOrEmpty(ircInfo.Username) && String.IsNullOrEmpty(ircInfo.Channel) &&
                 String.IsNullOrEmpty(ircInfo.OAuth)) {
                 //TODO: Maybe store in database instead of file?
-                Application.Run(new TwitchLogin());
+                Application.Run(new TwitchAuth());
                 if(System.IO.File.Exists(@"bin/data.txt")) {
                     var _ircInfo = System.IO.File.ReadAllLines(@"bin/data.txt");
                     if(_ircInfo.Length == 3) {

@@ -134,7 +134,10 @@ namespace TBot
 
         //ToolStrip events
         private void customCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
-            new Settings_Commands().ShowDialog();
+            new CustomCommands().ShowDialog();
+        }
+        private void genericCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
+            new GenericCommands().ShowDialog();
         }
         private void closeToolStripMenuItem_Click(object sender, EventArgs e) {
             this.Close();
@@ -175,5 +178,7 @@ namespace TBot
             }
         }
         #endregion
+
+
     }
 }

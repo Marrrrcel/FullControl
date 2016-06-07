@@ -1,6 +1,6 @@
 ﻿namespace TBot
 {
-    partial class TwitchLogin
+    partial class TwitchAuth
     {
         /// <summary>
         /// Required designer variable.

@@ -16,10 +16,9 @@ namespace TBot {
 
         
         private string Lastsong = "";
-        
         private TBot spotiBoti;
         private IrcInfo ircInfo;
-        private DateTime TimeOfBotStarted = DateTime.Now;
+        private const DateTime TimeOfBotStarted = DateTime.Now;
         public IrcClient ircClient;
         public Thread twitchThread, spotifyThread;
         public DB commands;

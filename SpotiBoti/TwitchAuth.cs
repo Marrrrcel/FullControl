@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TBot
 {
-    public partial class TwitchLogin : Form
+    public partial class TwitchAuth : Form
     {
-        public TwitchLogin()
+        public TwitchAuth()
         {
             InitializeComponent();
         }

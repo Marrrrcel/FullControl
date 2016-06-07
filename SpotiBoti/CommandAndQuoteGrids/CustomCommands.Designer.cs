@@ -1,6 +1,6 @@
 ﻿namespace TBot
 {
-    partial class Settings_Commands
+    partial class CustomCommands
     {
         /// <summary>
         /// Required designer variable.
