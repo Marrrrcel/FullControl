@@ -93,6 +93,30 @@ namespace TBot
             }));
         }
 
+        //Write to Command-tab
+        public void LogToCommand(string nick, string message)
+        {
+            Invoke(new Action(() => {
+                txtCommand.AppendText("[" + DateTime.Now.ToShortTimeString() + "] ");
+                txtCommand.SelectionFont = new Font(txtCommand.Font, FontStyle.Bold);
+                //Todo: Maybe add custom coloring to this
+                if (nick == "BOT")
+                {
+                    txtCommand.AppendText(nick + ": ", Color.Green);
+                }
+                else if (nick != ircInfo.Channel)
+                {
+                    txtCommand.AppendText(nick + ": ", Color.Gray);
+                }
+                else {
+                    txtCommand.AppendText(nick + ": ", Color.Red);
+                }
+                txtCommand.SelectionFont = new Font(txtCommand.Font, FontStyle.Regular);
+                txtCommand.ForeColor = Color.Black;
+                txtCommand.AppendLine(message);
+            }));
+        }
+
         //Write to logfile
         public void LogToLog(bool enabled, string Path, string message) {
             if(enabled)

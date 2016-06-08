@@ -63,7 +63,7 @@ namespace TBot {
                     {
                         spotiBoti.LogToChat(username, messageonly);
                     }
-                    ProcessMessage(messageonly);
+                    ProcessMessage(username, messageonly);
                 }
             } catch(Exception ex) {
                 if(!ex.Message.ToLower().Contains("thread")) {
@@ -89,29 +89,32 @@ namespace TBot {
         }
 
         //Detect commands in chat messages
-        private void ProcessMessage(string Chatline) {
+        private void ProcessMessage(string username, string Chatline) {
             string command = getCommand(Chatline.ToLower());
             
             if (command.StartsWith("!"))
             {
                 if (command.Contains("!help"))
                 {
+                    spotiBoti.LogToCommand(username, command);
                     ircClient.IrcSendChatMessage("You can use following Commands. Each Command starts with !");
                     spotiBoti.LogToChat("BOT", "You can use following Commands. Each Command starts with !");
                     Thread.Sleep(2000);
 
-                    /*foreach (string[] msg in ReturnCustomCommand())
+                    foreach (var msg in ReturnCustomCommand())
                     {
-                        ircClient.IrcSendChatMessage(msg[0]);
-                        Logging.Log(msg[0], Logging.Loglevel.Info);
-                        spotiBoti.LogToChat("BOT", msg[0]);
+                        ircClient.IrcSendChatMessage(msg[1].ToString());
+                        Logging.Log(msg[1].ToString(), Logging.Loglevel.Info);
+                        spotiBoti.LogToChat("BOT", msg[1].ToString());
                         Thread.Sleep(1000);
-                    }*/
+                    }
                 }
 
                 //TODO: Create Songrequestmethod etc.
                 if (command.Contains("!songrequest"))
                 {
+                    spotiBoti.LogToCommand(username, command);
+                    ircClient.IrcSendChatMessage("/w mrrrrcl test");
                     spotiBoti.UpdateFormText("SpotiBoti - NEW SONGREQUEST!!!");
                 }
 
@@ -119,6 +122,7 @@ namespace TBot {
                 {
                     if (command.Contains(msg[1].ToString()))
                     {
+                        spotiBoti.LogToCommand(username, command);
                         Status status = Spotify.DataProviderInstance.UpdateStatus();
                         TimeSpan Uptime = DateTime.Parse(DateTime.Now.ToLongTimeString()).Subtract(TimeOfBotStarted);
                         string result = msg[2].ToString()
@@ -136,13 +140,11 @@ namespace TBot {
             }
         }
 
-        //Returns string[][] of CurstomCommands
-        //TODO: get these out of datbase
+        //Returns Dataraw[] of enabled customcommands
         private DataRow[] ReturnCustomCommand() {
             DataTable dt = _dataBase.getCustomCommandTable();
             DataRow[] result = dt.Select("enable = 1");
             return result;
-            //return System.IO.File.ReadLines("commands.txt").Select(s => s.Split('|')).ToArray();
         }
 
         //Method for Spotify Songchange detection
