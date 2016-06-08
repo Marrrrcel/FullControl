@@ -52,7 +52,7 @@ namespace TBotCore { namespace Database {
             public string getGenericCommandResult(string command) {
                 string result = "";
                 _sqliteConnection.Open();
-                _sqliteCommand = new SQLiteCommand("select result from GenericCommands where enabled = 1 and command = '" + command + "';", _sqliteConnection);
+                _sqliteCommand = new SQLiteCommand($"select result from GenericCommands where enabled = 1 and command = '{command}';", _sqliteConnection);
                 _sqliteDataReader = _sqliteCommand.ExecuteReader();
                 while(_sqliteDataReader.Read()) {
                     result = _sqliteDataReader.GetString(0);
@@ -65,7 +65,7 @@ namespace TBotCore { namespace Database {
             public string getCustomCommandResult(string command) {
                 string result = "";
                 _sqliteConnection.Open();
-                _sqliteCommand = new SQLiteCommand("select result from CustomCommands where enabled = 1 and command = '" + command + "';", _sqliteConnection);
+                _sqliteCommand = new SQLiteCommand($"select result from CustomCommands where enabled = 1 and command = '{command}';", _sqliteConnection);
                 _sqliteDataReader = _sqliteCommand.ExecuteReader();
                 while(_sqliteDataReader.Read()) {
                     result = _sqliteDataReader.GetString(0);
@@ -136,7 +136,7 @@ namespace TBotCore { namespace Database {
                     _newValue = "0";
                     _oldValue = "1";
                 }
-                ExecuteInsertUpdateQuery("update Settings set enabled = '" + _newValue + "' where enabled='" + _oldValue + "' and setting='Log';");
+                ExecuteInsertUpdateQuery($"update Settings set enabled = '{_newValue}' where enabled='{_oldValue}' and setting='Log';");
             }
 
             //Enable/Disable SpotifyAutoSongChange to database
@@ -150,7 +150,7 @@ namespace TBotCore { namespace Database {
                     _newValue = "0";
                     _oldValue = "1";
                 }
-                ExecuteInsertUpdateQuery("update Settings set enabled = '" + _newValue + "' where enabled='" + _oldValue + "' and setting='SpotifyAutoSongChange';");
+                ExecuteInsertUpdateQuery($"update Settings set enabled = '{_newValue}' where enabled='{_oldValue}' and setting='SpotifyAutoSongChange';");
             }
 
             //Enable/Disable generic command to database
@@ -161,7 +161,7 @@ namespace TBotCore { namespace Database {
                     _enable = "0";
                 }
                 _sqliteCommand = new SQLiteCommand(_sqliteConnection);
-                _sqliteCommand.CommandText = "update GenericCommands set enabled = '" + _enable + "' where command='" + Command + "';";
+                _sqliteCommand.CommandText = $"update GenericCommands set enabled = '{_enable}' where command='{Command}';";
                 _sqliteCommand.ExecuteNonQuery();
                 _sqliteConnection.Close();
             }
@@ -174,7 +174,7 @@ namespace TBotCore { namespace Database {
                 {
                     CreateDB();
                 }
-                _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
+                _sqliteConnection = new SQLiteConnection($"Data Source={StaticDBStrings.Databasefolder}{StaticDBStrings.Databasename};Version=3");
 
                 //_sqliteConnection.Open();
                 //_sqliteCommand = new SQLiteCommand("SELECT Command,Result FROM CustomCommands WHERE enabled = '1';", _sqliteConnection);
@@ -198,7 +198,7 @@ namespace TBotCore { namespace Database {
                 if(!Directory.Exists(path)) {
                     Directory.CreateDirectory(path);
                 }
-                if(!System.IO.File.Exists(path + name)) {
+                if(!System.IO.File.Exists($"{path}{name}")) {
                     SQLiteConnection.CreateFile(path + name);
                 }
             }
@@ -233,7 +233,7 @@ namespace TBotCore { namespace Database {
             private bool TableIsEmpty(string Table) {
                 try {
                     _sqliteConnection.Open();
-                    _sqliteCommand = new SQLiteCommand("SELECT * FROM " + Table, _sqliteConnection);
+                    _sqliteCommand = new SQLiteCommand($"SELECT * FROM {Table}", _sqliteConnection);
                     _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
                     DataTable _dataTable = new DataTable();
                     _sqliteDataAdapter.Fill(_dataTable);

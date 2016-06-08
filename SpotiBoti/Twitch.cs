@@ -59,7 +59,11 @@ namespace TBot {
                     }
                     Logging.Log(message, Logging.Loglevel.Info);
                     spotiBoti.LogToConnect(message);
-                    ProcessMessage(message, username, messageonly);
+                    if (!String.IsNullOrEmpty(username))
+                    {
+                        spotiBoti.LogToChat(username, messageonly);
+                    }
+                    ProcessMessage(messageonly);
                 }
             } catch(Exception ex) {
                 if(!ex.Message.ToLower().Contains("thread")) {
@@ -75,8 +79,7 @@ namespace TBot {
 
         //Return first word of chatline
         private string getCommand(string Message) {
-            string temp = getChatline(Message);
-            return temp.Substring(temp.IndexOf(':') + 1).Split(' ')[0];
+            return Message.Substring(Message.IndexOf(':') + 1).Split(' ')[0];
         }
 
         //Return chatline only
@@ -86,56 +89,60 @@ namespace TBot {
         }
 
         //Detect commands in chat messages
-        private void ProcessMessage(string Command, string Username, string Chatline) {
-            Command = Command.ToLower();
-
-            if(!String.IsNullOrEmpty(Username)) {
-                spotiBoti.LogToChat(Username, Chatline);
-            }
-            if(Command.Contains("!help")) {
-                string helpmessage = "You can use following Commands. Each Command starts with !";
-                ircClient.IrcSendChatMessage(helpmessage);
-                spotiBoti.LogToChat("BOT", helpmessage);
-                Thread.Sleep(2000);
-
-                foreach(string[] msg in ReturnCustomCommands()) {
-                    ircClient.IrcSendChatMessage(msg[0]);
-                    Logging.Log(msg[0], Logging.Loglevel.Info);
-                    spotiBoti.LogToChat("BOT", msg[0]);
-                    Thread.Sleep(1000);
-                }
-            }
-
-            //TODO: Create Songrequestmethod etc.
-            if(Command.Contains("!songrequest")) {
-                spotiBoti.UpdateFormText("SpotiBoti - NEW SONGREQUEST!!!");
-            }
-
-            foreach(var msg in ReturnCustomCommands()) {
-                if(Command.Contains(msg[0])) {
-                    Status status = Spotify.DataProviderInstance.UpdateStatus();
-                    TimeSpan Uptime = DateTime.Parse(DateTime.Now.ToLongTimeString()).Subtract(TimeOfBotStarted);
-                    string result = msg[1]
-                        .Replace("$artist", status.Track.Artist)
-                        .Replace("$track", status.Track.Name)
-                        .Replace("$album", status.Track.Album)
-                        .Replace("$time", DateTime.Now.ToShortTimeString())
-                        .Replace("$uptime", Uptime.ToString());
-                    ircClient.IrcSendChatMessage(result);
+        private void ProcessMessage(string Chatline) {
+            string command = getCommand(Chatline.ToLower());
+            
+            if (command.StartsWith("!"))
+            {
+                if (command.Contains("!help"))
+                {
+                    ircClient.IrcSendChatMessage("You can use following Commands. Each Command starts with !");
+                    spotiBoti.LogToChat("BOT", "You can use following Commands. Each Command starts with !");
                     Thread.Sleep(2000);
-                    Logging.Log(result, Logging.Loglevel.Info);
-                    spotiBoti.LogToChat("BOT", result);
+
+                    /*foreach (string[] msg in ReturnCustomCommand())
+                    {
+                        ircClient.IrcSendChatMessage(msg[0]);
+                        Logging.Log(msg[0], Logging.Loglevel.Info);
+                        spotiBoti.LogToChat("BOT", msg[0]);
+                        Thread.Sleep(1000);
+                    }*/
+                }
+
+                //TODO: Create Songrequestmethod etc.
+                if (command.Contains("!songrequest"))
+                {
+                    spotiBoti.UpdateFormText("SpotiBoti - NEW SONGREQUEST!!!");
+                }
+
+                foreach (var msg in ReturnCustomCommand())
+                {
+                    if (command.Contains(msg[1].ToString()))
+                    {
+                        Status status = Spotify.DataProviderInstance.UpdateStatus();
+                        TimeSpan Uptime = DateTime.Parse(DateTime.Now.ToLongTimeString()).Subtract(TimeOfBotStarted);
+                        string result = msg[2].ToString()
+                            .Replace("$artist", status.Track.Artist)
+                            .Replace("$track", status.Track.Name)
+                            .Replace("$album", status.Track.Album)
+                            .Replace("$time", DateTime.Now.ToShortTimeString())
+                            .Replace("$uptime", Uptime.ToString());
+                        ircClient.IrcSendChatMessage(result);
+                        Thread.Sleep(2000);
+                        Logging.Log(result, Logging.Loglevel.Info);
+                        spotiBoti.LogToChat("BOT", result);
+                    }
                 }
             }
         }
 
         //Returns string[][] of CurstomCommands
         //TODO: get these out of datbase
-        private string[][] ReturnCustomCommands() {
+        private DataRow[] ReturnCustomCommand() {
             DataTable dt = _dataBase.getCustomCommandTable();
-            DataRow[] result = dt.Select("enabled = 1");
-            //return result;
-            return System.IO.File.ReadLines("commands.txt").Select(s => s.Split('|')).ToArray();
+            DataRow[] result = dt.Select("enable = 1");
+            return result;
+            //return System.IO.File.ReadLines("commands.txt").Select(s => s.Split('|')).ToArray();
         }
 
         //Method for Spotify Songchange detection
@@ -153,6 +160,7 @@ namespace TBot {
             string song = "Now playing: " + e.CurrentTrack.Name + " by " + e.CurrentTrack.Artist;
             Lastsong = e.LastTrack.Name + " by " + e.LastTrack.Artist;
             ircClient.IrcSendChatMessage(song);
+            //TODO: Add LogToLog (need to check how whole irc-message looks like)
             spotiBoti.LogToChat("BOT", song);
         }
         #endregion
