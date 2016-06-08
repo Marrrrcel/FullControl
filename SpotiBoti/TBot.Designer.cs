@@ -44,9 +44,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.txtCommand = new System.Windows.Forms.RichTextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -167,6 +169,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.txtCommand);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -207,6 +210,18 @@
             this.txtLog.TabIndex = 2;
             this.txtLog.Text = "";
             // 
+            // txtCommand
+            // 
+            this.txtCommand.BackColor = System.Drawing.Color.White;
+            this.txtCommand.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCommand.Location = new System.Drawing.Point(3, 3);
+            this.txtCommand.Name = "txtCommand";
+            this.txtCommand.ReadOnly = true;
+            this.txtCommand.Size = new System.Drawing.Size(498, 306);
+            this.txtCommand.TabIndex = 1;
+            this.txtCommand.Text = "";
+            // 
             // TBot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,6 +239,7 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -248,7 +264,7 @@
         private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableSpotifyAutosongchangeToolStripMenuItem;
-
+        public System.Windows.Forms.RichTextBox txtCommand;
     }
 }
 
