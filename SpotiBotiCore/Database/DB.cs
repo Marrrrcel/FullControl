@@ -18,7 +18,6 @@ namespace TBotCore { namespace Database {
             //Constructor
             public DB() {
                 Initialize();
-                //if (TableIsEmpty("Settings"))
             }
 
             #region Public methods
