@@ -222,6 +222,7 @@ namespace TBotCore { namespace Database {
 
             //Default executer to database
             private void ExecuteInsertUpdateQuery(string Query) {
+                //TODO: Check why error on creating the database
                 _sqliteConnection.Open();
                 _sqliteCommand = new SQLiteCommand(Query, _sqliteConnection);
                 _sqliteCommand.ExecuteNonQuery();
