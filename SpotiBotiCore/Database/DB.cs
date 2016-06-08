@@ -17,9 +17,8 @@ namespace TBotCore { namespace Database {
 
             //Constructor
             public DB() {
-                    Initialize();
-                    if(TableIsEmpty("Settings"))
-                        CreateDB();
+                Initialize();
+                //if (TableIsEmpty("Settings"))
             }
 
             #region Public methods
@@ -172,7 +171,10 @@ namespace TBotCore { namespace Database {
             #region Private methods
             //Initialize
             private void Initialize() {
-                CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
+                if (!Directory.Exists(StaticDBStrings.Databasefolder) && !System.IO.File.Exists(StaticDBStrings.Databasefolder + StaticDBStrings.Databasename))
+                {
+                    CreateDB();
+                }
                 _sqliteConnection = new SQLiteConnection(@"Data Source=" + StaticDBStrings.Databasefolder + StaticDBStrings.Databasename + ";Version=3");
 
                 //_sqliteConnection.Open();
@@ -184,6 +186,7 @@ namespace TBotCore { namespace Database {
 
             //Create default database
             private void CreateDB() {
+                CreateDBFile(StaticDBStrings.Databasefolder, StaticDBStrings.Databasename);
                 ExecuteInsertUpdateQuery(StaticDBStrings.CreateGenericCommandTable);
                 ExecuteInsertUpdateQuery(StaticDBStrings.CreateCustomCommandTable);
                 ExecuteInsertUpdateQuery(StaticDBStrings.CreateSettingTable);

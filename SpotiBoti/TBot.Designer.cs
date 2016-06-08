@@ -34,8 +34,6 @@
             this.commandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.genericCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.genericQuotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customQuotesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableSpotifyAutosongchangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,9 +81,7 @@
             // 
             this.commandsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.genericCommandsToolStripMenuItem,
-            this.customCommandsToolStripMenuItem,
-            this.genericQuotesToolStripMenuItem,
-            this.customQuotesToolStripMenuItem});
+            this.customCommandsToolStripMenuItem});
             this.commandsToolStripMenuItem.Name = "commandsToolStripMenuItem";
             this.commandsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.commandsToolStripMenuItem.Text = "Commands";
@@ -103,18 +99,6 @@
             this.customCommandsToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.customCommandsToolStripMenuItem.Text = "Custom Commands";
             this.customCommandsToolStripMenuItem.Click += new System.EventHandler(this.customCommandsToolStripMenuItem_Click);
-            // 
-            // genericQuotesToolStripMenuItem
-            // 
-            this.genericQuotesToolStripMenuItem.Name = "genericQuotesToolStripMenuItem";
-            this.genericQuotesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.genericQuotesToolStripMenuItem.Text = "Generic Quotes";
-            // 
-            // customQuotesToolStripMenuItem
-            // 
-            this.customQuotesToolStripMenuItem.Name = "customQuotesToolStripMenuItem";
-            this.customQuotesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.customQuotesToolStripMenuItem.Text = "Custom Quotes";
             // 
             // logToolStripMenuItem
             // 
@@ -209,7 +193,7 @@
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(504, 312);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Connect";
+            this.tabPage4.Text = "Log";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // txtLog
@@ -254,8 +238,6 @@
         private System.Windows.Forms.ToolStripMenuItem commandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem genericCommandsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customCommandsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem genericQuotesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customQuotesToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
