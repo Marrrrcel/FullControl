@@ -102,10 +102,9 @@ namespace TBot
 
         //Detect commands in chat messages
         private void ProcessMessage(string username, string Chatline) {
-            string command = getCommand(Chatline.ToLower());
-
-            if (command.StartsWith("!"))
+            if (Chatline.StartsWith("!"))
             {
+                string command = getCommand(Chatline.ToLower());
                 if (command.Contains("!help"))
                 {
                     spotiBoti.LogToCommand(username, command);
