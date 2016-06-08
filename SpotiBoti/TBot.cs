@@ -11,10 +11,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
-namespace TBot
-{
-    public partial class TBot : Form
-    {
+namespace TBot {
+    public partial class TBot : Form {
         private Twitch _twitch;
         private DB _dataBase;
 
@@ -23,7 +21,8 @@ namespace TBot
         //TODO: Move to Twitch.cs etc...
         SpotifyCore spCore = new SpotifyCore();
 
-        public TBot(IrcInfo _ircInfo, bool IsSpotifyEnabled) {
+        public TBot(IrcInfo _ircInfo, bool IsSpotifyEnabled)
+        {
             this.ircInfo = _ircInfo;
 
             InitializeComponent();
@@ -36,7 +35,8 @@ namespace TBot
         }
 
         #region Testing methods
-        private void DoTest() {
+        private void DoTest()
+        {
 #if false
             string commandgotbychatline = "!currentsong";
             DataRow[] result = _commands._currentCustomCommandsDatatable.Select("Command = '" + commandgotbychatline + "'");
@@ -47,17 +47,21 @@ namespace TBot
             txtChat.Text = isFollowingMyStream("marceld89");
 #endif
         }
-        private string isFollowingMyStream(string username) {
+        private string isFollowingMyStream(string username)
+        {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(@"https://api.twitch.tv/kraken/users/" + username + "/follows/channels/hardlydifficult");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "*/*";
             httpWebRequest.Method = "GET";
 
-            try {
+            try
+            {
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 var streamReader = new StreamReader(httpResponse.GetResponseStream());
                 return streamReader.ReadToEnd();
-            } catch(Exception ex ) {
+            }
+            catch (Exception ex)
+            {
                 TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
                 TBotCore.Log.Logging.Log("User is not following the stream!", TBotCore.Log.Logging.Loglevel.Warning);
                 return "User is not following the stream!";
@@ -68,23 +72,31 @@ namespace TBot
         #region Custom methods
         #region Public methods
         //Write to Connect-tab
-        public void LogToConnect(string message) {
-            Invoke(new Action(() => {
+        public void LogToConnect(string message)
+        {
+            Invoke(new Action(() =>
+            {
                 txtLog.AppendLine(DateTime.Now.ToShortTimeString() + " " + message);
             }));
         }
 
         //Write to Chat-tab
-        public void LogToChat(string nick, string message) {
-            Invoke(new Action(() => {
+        public void LogToChat(string nick, string message)
+        {
+            Invoke(new Action(() =>
+            {
                 txtChat.AppendText("[" + DateTime.Now.ToShortTimeString() + "] ");
                 txtChat.SelectionFont = new Font(txtChat.Font, FontStyle.Bold);
                 //Todo: Maybe add custom coloring to this
-                if(nick == "BOT") {
+                if (nick == "BOT")
+                {
                     txtChat.AppendText(nick + ": ", Color.Green);
-                } else if(nick != ircInfo.Channel) {
+                }
+                else if (nick != ircInfo.Channel)
+                {
                     txtChat.AppendText(nick + ": ", Color.Gray);
-                } else {
+                }
+                else {
                     txtChat.AppendText(nick + ": ", Color.Red);
                 }
                 txtChat.SelectionFont = new Font(txtChat.Font, FontStyle.Regular);
@@ -96,7 +108,8 @@ namespace TBot
         //Write to Command-tab
         public void LogToCommand(string nick, string message)
         {
-            Invoke(new Action(() => {
+            Invoke(new Action(() =>
+            {
                 txtCommand.AppendText("[" + DateTime.Now.ToShortTimeString() + "] ");
                 txtCommand.SelectionFont = new Font(txtCommand.Font, FontStyle.Bold);
                 //Todo: Maybe add custom coloring to this
@@ -118,21 +131,25 @@ namespace TBot
         }
 
         //Write to logfile
-        public void LogToLog(bool enabled, string Path, string message) {
-            if(enabled)
+        public void LogToLog(bool enabled, string Path, string message)
+        {
+            if (enabled)
                 System.IO.File.AppendAllText(Path, DateTime.Now.ToShortTimeString() + " " + message + "\r\n");
         }
 
         //Write to formtitle
-        public void UpdateFormText(string text) {
-            Invoke(new Action(() => {
+        public void UpdateFormText(string text)
+        {
+            Invoke(new Action(() =>
+            {
                 this.Text = text;
             }));
         }
         #endregion
 
         #region Private methods
-        private void Initilize(bool SpotifyEnabled) {
+        private void Initilize(bool SpotifyEnabled)
+        {
             _dataBase = new DB();
 
             enableLogToolStripMenuItem.Checked = _dataBase.getLogEnabled();
@@ -144,58 +161,76 @@ namespace TBot
 
         #region Form and Control actions
         //Form events
-        private void SpotiBoti_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e) {
-            try {
-                if(!_twitch.ircClient.IrcCloseConnection()) {
+        private void SpotiBoti_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        {
+            try
+            {
+                if (!_twitch.ircClient.IrcCloseConnection())
+                {
                     _twitch.twitchThread.Abort();
                     _twitch.spotifyThread.Abort();
                 }
-            } catch(Exception) {
+            }
+            catch (Exception)
+            {
             }
         }
 
         //ToolStrip events
-        private void customCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void customCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             new CustomCommands().ShowDialog();
         }
-        private void genericCommandsToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void genericCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             new GenericCommands().ShowDialog();
         }
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
-        private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        private void enableLogToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
             _dataBase.setLog(enableLogToolStripMenuItem.Checked);
         }
-        private void enableLogToolStripMenuItem_Click(object sender, EventArgs e) {
-            if(enableLogToolStripMenuItem.Checked) {
+        private void enableLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enableLogToolStripMenuItem.Checked)
+            {
                 enableLogToolStripMenuItem.Checked = false;
                 enableLogToolStripMenuItem.CheckState = CheckState.Unchecked;
                 _dataBase.setLog(enableLogToolStripMenuItem.Checked);
-            } else {
+            }
+            else {
                 enableLogToolStripMenuItem.Checked = true;
                 enableLogToolStripMenuItem.CheckState = CheckState.Checked;
                 _dataBase.setLog(enableLogToolStripMenuItem.Checked);
             }
         }
-        private void enableSpotifyAutosongchangeToolStripMenuItem_Click(object sender, EventArgs e) {
-            if(enableSpotifyAutosongchangeToolStripMenuItem.Checked) {
+        private void enableSpotifyAutosongchangeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (enableSpotifyAutosongchangeToolStripMenuItem.Checked)
+            {
                 enableSpotifyAutosongchangeToolStripMenuItem.Checked = false;
                 enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Unchecked;
                 _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
-            } else {
+            }
+            else {
                 enableSpotifyAutosongchangeToolStripMenuItem.Checked = true;
                 enableSpotifyAutosongchangeToolStripMenuItem.CheckState = CheckState.Checked;
                 _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
             }
         }
-        private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e) {
+        private void enableSpotifyAutosongchangeToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
             _dataBase.setSpotifyAutoSongChange(enableSpotifyAutosongchangeToolStripMenuItem.Checked);
         }
 
         //TabControl events
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e) {
-            if(tabControl1.SelectedIndex == 2) {
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 2)
+            {
                 UpdateFormText("SpotiBoti");
             }
         }
