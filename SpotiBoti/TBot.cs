@@ -152,6 +152,7 @@ namespace TBot {
         {
             _dataBase = new DB();
 
+            this.txtSongrequest.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             enableLogToolStripMenuItem.Checked = _dataBase.getLogEnabled();
             enableSpotifyAutosongchangeToolStripMenuItem.Checked = _dataBase.getSpotifyAutoSongChangeEnabled();
             _twitch = new Twitch(this, ircInfo, _dataBase, SpotifyEnabled);
@@ -234,8 +235,21 @@ namespace TBot {
                 UpdateFormText("SpotiBoti");
             }
         }
+
         #endregion
 
+        private void txtSongrequest_DrawItem(object sender, DrawItemEventArgs e) {
+            SongrequestListBoxItem item = txtSongrequest.Items[e.Index] as SongrequestListBoxItem;
+            if(item != null) {
+                e.Graphics.DrawString(
+                    item.Message,
+                    txtSongrequest.Font,
+                    new SolidBrush(item.ItemColor),
+                    0,
+                    e.Index * txtSongrequest.ItemHeight);
+            } else {
 
+            }
+        }
     }
 }

@@ -41,14 +41,16 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtChat = new System.Windows.Forms.RichTextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtCommand = new System.Windows.Forms.RichTextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtLog = new System.Windows.Forms.RichTextBox();
-            this.txtCommand = new System.Windows.Forms.RichTextBox();
+            this.txtSongrequest = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -178,8 +180,21 @@
             this.tabPage2.Text = "Commands";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // txtCommand
+            // 
+            this.txtCommand.BackColor = System.Drawing.Color.White;
+            this.txtCommand.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtCommand.Location = new System.Drawing.Point(3, 3);
+            this.txtCommand.Name = "txtCommand";
+            this.txtCommand.ReadOnly = true;
+            this.txtCommand.Size = new System.Drawing.Size(498, 306);
+            this.txtCommand.TabIndex = 1;
+            this.txtCommand.Text = "";
+            // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.txtSongrequest);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -210,17 +225,16 @@
             this.txtLog.TabIndex = 2;
             this.txtLog.Text = "";
             // 
-            // txtCommand
+            // txtSongrequest
             // 
-            this.txtCommand.BackColor = System.Drawing.Color.White;
-            this.txtCommand.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCommand.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtCommand.Location = new System.Drawing.Point(3, 3);
-            this.txtCommand.Name = "txtCommand";
-            this.txtCommand.ReadOnly = true;
-            this.txtCommand.Size = new System.Drawing.Size(498, 306);
-            this.txtCommand.TabIndex = 1;
-            this.txtCommand.Text = "";
+            this.txtSongrequest.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtSongrequest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSongrequest.FormattingEnabled = true;
+            this.txtSongrequest.Location = new System.Drawing.Point(3, 3);
+            this.txtSongrequest.Name = "txtSongrequest";
+            this.txtSongrequest.Size = new System.Drawing.Size(498, 306);
+            this.txtSongrequest.TabIndex = 0;
+            this.txtSongrequest.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.txtSongrequest_DrawItem);
             // 
             // TBot
             // 
@@ -240,6 +254,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -265,6 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem enableLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableSpotifyAutosongchangeToolStripMenuItem;
         public System.Windows.Forms.RichTextBox txtCommand;
+        public System.Windows.Forms.ListBox txtSongrequest;
     }
 }
 

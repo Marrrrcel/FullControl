@@ -5,6 +5,7 @@ using nSpotify;
 using TBotCore.Database;
 using TBotCore.Log;
 using System.Data;
+using System.Drawing;
 
 namespace TBot {
     public class Twitch {
@@ -19,7 +20,7 @@ namespace TBot {
         public DB _dataBase;
 
         //Constructor
-        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _dataBase, bool SpotifyEnabled) {
+        public Twitch(TBot _spotiBoti, IrcInfo _ircInfo, DB _dataBase, bool SpotifyEnabled) { // //
             this.spotiBoti = _spotiBoti;
             this.ircInfo = _ircInfo;
             this._dataBase = _dataBase;
@@ -62,6 +63,7 @@ namespace TBot {
                         if(command.Contains("!help")) {
                             ProcessHelpCommand(username);
                         } else if(command.Contains("!songrequest")) {
+                            ProcessSongrequest(messageonly, username);
                             spotiBoti.LogToCommand(username, command);
                             spotiBoti.UpdateFormText("SpotiBoti - NEW SONGREQUEST!!!");
                         } else {
@@ -72,7 +74,7 @@ namespace TBot {
                 }
             } catch(Exception ex) {
                 if(!ex.Message.ToLower().Contains("thread")) {
-                    TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Warning);
+                    TBotCore.Log.Logging.Log(ex.Message, TBotCore.Log.Logging.Loglevel.Error);
                 }
             }
         }
@@ -97,6 +99,19 @@ namespace TBot {
         private string getChatline(string Message) {
             string temp = Message.Substring(Message.IndexOf(':') + 1);
             return temp.Substring(temp.IndexOf(':') + 1);
+        }
+
+        //Process songrequest
+        private void ProcessSongrequest(string chatline, string username) {
+            if(chatline.Length > 12) {
+                string temp = chatline.Substring(13);
+                if(!String.IsNullOrEmpty(temp)) {
+                    
+                    spotiBoti.txtSongrequest.Items.Add(new SongrequestListBoxItem($"{username}: {temp}"));
+                    //spotiBoti.txtSongrequest.Items.Add($"{username}: {temp}");
+                }
+            }
+            //Songrequest.SearchYoutube(spotiBoti.txtSongrequest, "Actual Request");
         }
 
         //Detect commands in chat messages
