@@ -48,6 +48,17 @@ namespace TBotCore { namespace Database {
                 return result;
             }
 
+            //Return generic commands datatable
+            public DataTable getGenericCommandTable() {
+                _sqliteConnection.Open();
+                _sqliteCommand = new SQLiteCommand("select enabled Enable, command Command, result Result FROM GenericCommands;", _sqliteConnection);
+                _sqliteDataAdapter = new SQLiteDataAdapter(_sqliteCommand);
+                DataTable result = new DataTable();
+                _sqliteDataAdapter.Fill(result);
+                _sqliteConnection.Close();
+                return result;
+            }
+
             //Return generic command result based on command
             public string getGenericCommandResult(string command) {
                 string result = "";
