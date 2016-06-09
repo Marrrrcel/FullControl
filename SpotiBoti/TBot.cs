@@ -239,14 +239,21 @@ namespace TBot {
         #endregion
 
         private void txtSongrequest_DrawItem(object sender, DrawItemEventArgs e) {
+
             SongrequestListBoxItem item = txtSongrequest.Items[e.Index] as SongrequestListBoxItem;
             if(item != null) {
-                e.Graphics.DrawString(
+                e.DrawBackground();
+                Graphics g = e.Graphics;
+                g.FillRectangle(new SolidBrush(Color.Gray), e.Bounds);
+                g.DrawString(
                     item.Message,
-                    txtSongrequest.Font,
+                    new Font(txtSongrequest.Font, FontStyle.Regular),
                     new SolidBrush(item.ItemColor),
                     0,
                     e.Index * txtSongrequest.ItemHeight);
+                
+                e.DrawFocusRectangle();
+
             } else {
 
             }

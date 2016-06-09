@@ -21,8 +21,8 @@ namespace TBot {
         }
 
         public Color ItemColor {
-            get
-                return Color.Green;
+            get { 
+                return Color.Black;
             }
         }
         public Color BackColor {
